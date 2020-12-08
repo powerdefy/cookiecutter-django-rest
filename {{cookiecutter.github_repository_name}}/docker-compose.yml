@@ -2,7 +2,7 @@ version: '2.4'
 
 services:
   postgres:
-    image: postgres:12-alpine
+    image: postgres:11.6
 
   django:
     image: django
