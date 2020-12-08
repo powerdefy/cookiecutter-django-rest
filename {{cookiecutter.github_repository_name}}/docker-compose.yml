@@ -1,0 +1,22 @@
+version: '2.4'
+
+services:
+  postgres:
+    image: postgres:12-alpine
+
+  django:
+    image: django
+    build: ./
+    restart: always
+    environment:
+      - DJANGO_SECRET_KEY=local
+    command: >
+      bash -c "python wait_for_postgres.py &&
+               ./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/opt/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
